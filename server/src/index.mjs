@@ -1,0 +1,10 @@
+import {connect} from './db.mjs';
+import {createApp} from './app.mjs';
+import {mailerFromEnv} from './mail.mjs';
+const production=process.env.NODE_ENV==='production';
+const origin=process.env.APP_ORIGIN||'http://localhost:3000';
+if(production&&!origin.startsWith('https://'))throw Error('Production APP_ORIGIN must use HTTPS');
+const connection=await connect();
+const app=createApp({...connection,mail:mailerFromEnv(),origin,production});
+const server=app.listen(Number(process.env.PORT||3000),'0.0.0.0',()=>console.log('Navin CRM server ready on port '+(process.env.PORT||3000)));
+for(const signal of ['SIGTERM','SIGINT'])process.on(signal,()=>server.close(async()=>{await connection.client.close();process.exit(0);}));

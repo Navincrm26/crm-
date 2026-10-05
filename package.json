@@ -1,0 +1,38 @@
+{
+  "name": "navin-crm-mern",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts-dev.mjs",
+    "dev:api": "node --env-file-if-exists=.env --watch server/src/index.mjs",
+    "dev:ui": "vite --config client/vite.config.js",
+    "build": "vite build --config client/vite.config.js",
+    "start": "node --env-file-if-exists=.env server/src/index.mjs",
+    "bootstrap": "node --env-file-if-exists=.env server/scripts/bootstrap.mjs",
+    "import": "node --env-file-if-exists=.env server/scripts/import.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "predev": "node scripts/prepare-ocr.mjs",
+    "prebuild": "node scripts/prepare-ocr.mjs",
+    "test:integration": "node --env-file-if-exists=.env --test tests/atlas.integration.mjs"
+  },
+  "dependencies": {
+    "exceljs": "4.4.0",
+    "express": "5.2.1",
+    "helmet": "8.1.0",
+    "mongodb": "6.20.0",
+    "nodemailer": "10.0.14",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tesseract.js": "6.0.1"
+  },
+  "devDependencies": {
+    "jsdom": "27.0.1",
+    "mongodb-memory-server": "10.2.3",
+    "supertest": "7.1.4",
+    "vite": "8.0.13"
+  }
+}
